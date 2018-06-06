@@ -52,7 +52,7 @@ public class Main {
             "which is actually developed by the 'professional-services' library. Give them some Kudos for it!";
 
 
-    public static void main(String[] args) throws ExecutionException, InterruptedException {
+    private static void test() throws InterruptedException, ExecutionException {
         final HipChatClient client = HipChatClientUtils.getHipChatClient(HIPCHAT_ACCESS_TOKEN);
 
         final HipChatRoom room = HipChatRoomBuilder.ofName("ROOM_NAME")

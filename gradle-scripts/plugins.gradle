@@ -4,3 +4,6 @@ apply plugin: 'checkstyle'
 apply plugin: 'pmd'
 apply plugin: 'jacoco'
 apply plugin: 'findbugs'
+
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'

@@ -8,9 +8,11 @@ ext{
     jacocoVersion = '0.8.0'
     findbugsVersion = '3.0.1'
     hipchatJava = '0.4.3'
+    springBootVersion = '2.0.2.RELEASE'
 }
 
 dependencies {
+    implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     implementation "com.commercetools.sdk.jvm.core:commercetools-models:${commercetoolsJvmSdkVersion}"
     implementation "com.commercetools.sdk.jvm.core:commercetools-java-client:${commercetoolsJvmSdkVersion}"
     implementation "com.commercetools.sdk.jvm.core:commercetools-convenience:${commercetoolsJvmSdkVersion}"
