@@ -3,7 +3,7 @@ package com.heshammassoud.models;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class HipChatRoomBuilder {
+public final class HipChatRoomBuilder {
 
     private String name;
     private String id;
@@ -13,11 +13,11 @@ public class HipChatRoomBuilder {
         this.id = id;
     }
 
-    public static HipChatRoomBuilder ofName(@Nonnull final String name){
+    public static HipChatRoomBuilder ofName(@Nonnull final String name) {
         return new HipChatRoomBuilder(name, null);
     }
 
-    public static HipChatRoomBuilder ofId(@Nonnull final String id){
+    public static HipChatRoomBuilder ofId(@Nonnull final String id) {
         return new HipChatRoomBuilder(null, id);
     }
 

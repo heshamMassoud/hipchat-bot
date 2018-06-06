@@ -21,14 +21,14 @@ import static java.lang.String.format;
 
 public class Main {
     private static final String HIPCHAT_ACCESS_TOKEN = "oFQL64U4tmjlN6l56UdwjV2xF9kaSvAibHEjdSQx";
-    private static final String MAIN_MENU_MESSAGE = "1. Play around with commercetools project data.\n" +
-            "2. Play table tennis.";
+    private static final String MAIN_MENU_MESSAGE = "1. Play around with commercetools project data.%n"
+            + "2. Play table tennis.";
     private static final String GOOD_MORNING_MESSAGE =
-            "Hi, good morning %s! What can I do for you today?:)\n" + MAIN_MENU_MESSAGE;
-    private static final String WISH_IS_MY_COMMAND_MESSAGE = "Your wish is my command (obey) I just need a small " +
-            "favour to completely obey your wishes.";
-    private static final String ASK_CREDENTIALS = "Please provide me the credentials to be able to access your CTP " +
-            "project (Those can be found here **link**).";
+            "Hi, good morning %s! What can I do for you today?:)%n" + MAIN_MENU_MESSAGE;
+    private static final String WISH_IS_MY_COMMAND_MESSAGE = "Your wish is my command (obey) I just need a small "
+            + "favour to completely obey your wishes.";
+    private static final String ASK_CREDENTIALS = "Please provide me the credentials to be able to access your CTP "
+            + "project (Those can be found here **link**).";
     private static final String ASK_CREDENTIALS_MESSAGE_FIRST_TIME =
             WISH_IS_MY_COMMAND_MESSAGE + "\n" + ASK_CREDENTIALS;
     private static final String ASK_CURRENT_PROJECT_KEY = "Please enter the project key";
@@ -37,19 +37,23 @@ public class Main {
     private static final String SUCCESSFULLY_ACCESSED_PROJECT = "YAYY!! SUCESS!! GREEN GREEN GUGGY GUGGY!";
     private static final String WISH_IS_TRULY_MY_COMMAND = "Now, your wish is truly my command (geeny)";
     private static final String CTP_PLAYGROUND_MENU =
-            "1. View products.\n" +
-                    "2. View product types.\n" +
-                    "3. View inventory entries.\n" +
-                    "4. Delete all products.\n" +
-                    "5. Delete all product types.\n" +
-                    "6. Delete all inventory entries.\n" +
-                    "7. Sync products to a target commercetools project. (Please make sure all the prerequisites are set: references)\n" +
-                    "8. Sync product types to a target commercetools project. (Please make sure all the prerequisites are set: references)\n" +
-                    "9. Sync categories to a target commercetools project. (Please make sure all the prerequisites are set: references)\n" +
-                    "10. Sync inventory entries to a target commercetools project. (Please make sure all the prerequisites are set: references)\n" +
-                    "11. Change context. (back to main menu)";
-    private static final String FUN_FACT_1 = "Nice! Fun fact: the sync process uses a pretty cool java library (commercetools-sync-java) underneath\n" +
-            "which is actually developed by the 'professional-services' library. Give them some Kudos for it!";
+            "1. View products.\n"
+                    + "2. View product types.\n"
+                    + "3. View inventory entries.\n"
+                    + "4. Delete all products.\n"
+                    + "5. Delete all product types.\n"
+                    + "6. Delete all inventory entries.\n"
+                    + "7. Sync products to a target commercetools project. (Please make sure all the prerequisites are"
+                    + " set: references)\n" + "8. Sync product types to a target commercetools project. (Please make "
+                    + "sure all the prerequisites are set: references)\n"
+                    + "9. Sync categories to a target commercetools project. "
+                    + "(Please make sure all the prerequisites are set: references)\n"
+                    + "10. Sync inventory entries to a target commercetools project. (Please "
+                    + "make sure all the prerequisites are set: references)\n"
+                    + "11. Change context. (back to main menu)";
+    private static final String FUN_FACT_1 = "Nice! Fun fact: the sync process uses a pretty cool java "
+            + "library (commercetools-sync-java) underneath which is actually developed by the 'professional-services'"
+            + " library. Give them some Kudos for it!";
 
 
     private static void test() throws InterruptedException, ExecutionException {
@@ -82,6 +86,7 @@ public class Main {
                     break;//CTP
                 case 2:
                     break;//TENNIS
+                default: break;
             }
 
 
@@ -110,8 +115,8 @@ public class Main {
     }
 
     private static void playgroundDialogue(@Nonnull final HipChatClient client, @Nonnull final UserItem user) {
-        final String userId = user.getId() + "";
         final String userName = user.getName();
+        final String userId = user.getId() + userName;
 
         client.preparePrivateMessageUserRequestBuilder(userId, ASK_CREDENTIALS_MESSAGE_FIRST_TIME)
               .build()
@@ -141,9 +146,9 @@ public class Main {
                      .get();
 
 
-        } catch (InterruptedException | ExecutionException e) {
+        } catch (InterruptedException | ExecutionException exception) {
             // cound't connect to CTP
-            e.printStackTrace();
+            exception.printStackTrace();
         }
 
 
