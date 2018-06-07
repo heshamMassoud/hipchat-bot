@@ -39,13 +39,15 @@ public class HipChatRoomController {
         final RoomMessage message = webhook.getItem().getMessage();
         final UserItem messageSender = message.getFrom();
 
-
-        final String messageContent = format(WELCOME_MESSAGE, messageSender.getName());
+        String messageContent = format(WELCOME_MESSAGE, messageSender.getMentionName());
+        if (message.getMessage().toLowerCase().contains("sync".toLowerCase())) {
+            messageContent = "Syncing...";
+        }
 
         return RoomMessageBuilder.of()
                                  .color(MessageColor.GRAY.name())
                                  .message(messageContent)
-                                 .messageFormat("text")
+                                 .messageFormat("html")
                                  .notify(true)
                                  .build();
     }

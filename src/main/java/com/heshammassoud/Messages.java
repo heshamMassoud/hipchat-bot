@@ -1,9 +1,9 @@
 package com.heshammassoud;
 
 public final class Messages {
-    public static final String MAIN_MENU_MESSAGE = "1. Play around with commercetools project data.%n"
+    public static final String MAIN_MENU_MESSAGE = "1. Play around with commercetools project data.<br>"
             + "2. Play table tennis.";
-    public static final String WELCOME_MESSAGE = "Hi %s! What can I do for you today?:)%n" + MAIN_MENU_MESSAGE;
+    public static final String WELCOME_MESSAGE = "Hi %s! What can I do for you today?:)<br>" + MAIN_MENU_MESSAGE;
     public static final String WISH_IS_MY_COMMAND_MESSAGE = "Your wish is my command (obey) I just need a small "
             + "favour to completely obey your wishes.";
     public static final String ASK_CREDENTIALS = "Please provide me the credentials to be able to access your CTP "
