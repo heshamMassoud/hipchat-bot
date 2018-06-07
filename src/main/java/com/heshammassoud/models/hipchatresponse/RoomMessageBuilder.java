@@ -1,17 +1,9 @@
-package com.heshammassoud.models.HipChatResponse;
+package com.heshammassoud.models.hipchatresponse;
 
 import com.fasterxml.jackson.annotation.JsonAlias;
 
 import javax.annotation.Nonnull;
 
-/**
- * {
- "color": "green",
- "message": "It's going to be sunny tomorrow! (yey)",
- "notify": false,
- "message_format": "text"
- }
- */
 public class RoomMessageBuilder {
     private String color;
     private String message;
@@ -20,7 +12,8 @@ public class RoomMessageBuilder {
     private String messageFormat;
 
 
-    private RoomMessageBuilder(String color, String message, boolean notify, String messageFormat) {
+    private RoomMessageBuilder(@Nonnull final String color, @Nonnull final String message,
+                               final boolean notify, @Nonnull final String messageFormat) {
         this.color = color;
         this.message = message;
         this.notify = notify;
@@ -35,22 +28,27 @@ public class RoomMessageBuilder {
         return new RoomMessageBuilder();
     }
 
+    @Nonnull
     public RoomMessageBuilder color(@Nonnull final String color) {
         return new RoomMessageBuilder(color, message, notify, messageFormat);
     }
 
+    @Nonnull
     public RoomMessageBuilder message(@Nonnull final String message) {
         return new RoomMessageBuilder(color, message, notify, messageFormat);
     }
 
+    @Nonnull
     public RoomMessageBuilder notify(final boolean notify) {
         return new RoomMessageBuilder(color, message, notify, messageFormat);
     }
 
+    @Nonnull
     public RoomMessageBuilder messageFormat(@Nonnull final String messageFormat) {
         return new RoomMessageBuilder(color, message, notify, messageFormat);
     }
 
+    @Nonnull
     public RoomMessage build() {
         return new RoomMessage(color, message, notify, messageFormat);
     }

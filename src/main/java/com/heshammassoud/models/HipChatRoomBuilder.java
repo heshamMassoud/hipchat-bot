@@ -13,14 +13,17 @@ public final class HipChatRoomBuilder {
         this.id = id;
     }
 
+    @Nonnull
     public static HipChatRoomBuilder ofName(@Nonnull final String name) {
         return new HipChatRoomBuilder(name, null);
     }
 
+    @Nonnull
     public static HipChatRoomBuilder ofId(@Nonnull final String id) {
         return new HipChatRoomBuilder(null, id);
     }
 
+    @Nonnull
     public HipChatRoom build() {
         return new HipChatRoom(this.name, this.id);
     }

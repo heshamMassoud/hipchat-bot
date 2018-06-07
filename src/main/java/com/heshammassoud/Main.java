@@ -17,7 +17,11 @@ import javax.annotation.Nonnull;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
-import static com.heshammassoud.Messages.*;
+import static com.heshammassoud.Messages.ASK_CREDENTIALS_MESSAGE_FIRST_TIME;
+import static com.heshammassoud.Messages.ASK_CURRENT_CLIENT_ID;
+import static com.heshammassoud.Messages.ASK_CURRENT_CLIENT_SECRET;
+import static com.heshammassoud.Messages.ASK_CURRENT_PROJECT_KEY;
+import static com.heshammassoud.Messages.WELCOME_MESSAGE;
 import static java.lang.String.format;
 
 public class Main {
