@@ -51,6 +51,22 @@
       "url": "/configuration",
       "authentication": "jwt"
       }
-    ]
+    ],
+    "chat:actionTarget" : [
+         {
+           "key": "commercetoolsMenu",
+           "callService": {
+             "url": "/commercetools-menu"
+           }
+         }
+      ],
+    "chat:actionTarget" : [
+         {
+           "key": "tableTennisMenu",
+           "callService": {
+             "url": "/table-tennis-menu"
+           }
+         }
+      ]
   }
 }
