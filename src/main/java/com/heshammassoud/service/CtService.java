@@ -2,9 +2,11 @@ package com.heshammassoud.service;
 
 import com.atlassian.adf.Document;
 import com.atlassian.adf.block.codeblock.Language;
+import com.atlassian.adf.inline.Mark;
 import com.atlassian.stride.api.StrideClient;
 import com.atlassian.stride.model.context.UserContext;
 import com.atlassian.stride.model.webhooks.MessageSent;
+import com.heshammassoud.models.ActionTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -54,19 +56,27 @@ public class CtService {
     }
 
     private Document buildMainMenuMessage(@Nonnull final String userName) {
+        //UnknownInlineNode inlineExtension = new UnknownInlineNode();
+        //inlineExtension.properties(new HashMap<>());
+        final Mark commercetoolsMenu = createActionMark("Play around with commercetools project data.",
+                "commercetoolsMenu");
+        final Mark tableTennisMenu = createActionMark("Play table tennis.", "tableTennisMenu");
+
+
         return Document.create()
                        .paragraph(p -> p.text("Hello, ")
                                         .strong(userName)
                                         .text("!"))
-                       .card("Your wish is my command:", applicationCard ->
-                               applicationCard.attrs()
-                                              .action("Play around with commercetools project data.",
-                                                      "CTinator", "commercetoolsMenu")
-                                              .action("Play table tennis.",
-                                                      "CTinator", "tableTennisMenu"))
+                       .paragraph(paragraph -> paragraph.text("Please choose one of the following options:"))
                        .orderedList(l -> l
-                               .item(i -> i.paragraph("Play around with commercetools project data."))
-                               .item(i -> i.paragraph("Play table tennis.")));
+                               .item(i -> i.paragraph(paragraph -> paragraph.text("", commercetoolsMenu)))
+                               .item(i -> i.paragraph(paragraph -> paragraph.text("", tableTennisMenu))));
+    }
+
+    private static Mark createActionMark(@Nonnull final String title, @Nonnull final String targetKey) {
+        return Mark.mark("action")
+                   .attribute("title", title)
+                   .anyAttribute("target", new ActionTarget(targetKey));
     }
 
     private Document buildMainMenuMessage2(@Nonnull final String userName) {
