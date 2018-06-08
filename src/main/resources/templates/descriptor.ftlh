@@ -9,6 +9,9 @@
         "key": "ctinator-mention",
         "mention": {
           "url": "/bot-mention"
+        },
+        "directMessage": {
+          "url": "/bot-direct-message"
         }
     }]
   }
