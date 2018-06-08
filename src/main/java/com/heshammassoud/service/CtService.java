@@ -64,13 +64,11 @@ public class CtService {
 
 
         return Document.create()
-                       .paragraph(p -> p.text("Hello, ")
-                                        .strong(userName)
-                                        .text("!"))
-                       .paragraph(paragraph -> paragraph.text("Please choose one of the following options:"))
-                       .orderedList(l -> l
-                               .item(i -> i.paragraph(paragraph -> paragraph.text("", commercetoolsMenu)))
-                               .item(i -> i.paragraph(paragraph -> paragraph.text("", tableTennisMenu))));
+                       .paragraph(p -> p.text("Hello, ", commercetoolsMenu, tableTennisMenu));
+        /*.paragraph(paragraph -> paragraph.text("Please choose one of the following options:"))
+        .orderedList(l -> l
+               .item(i -> i.paragraph(paragraph -> paragraph.text("", commercetoolsMenu)))
+               .item(i -> i.paragraph(paragraph -> paragraph.text("", tableTennisMenu))));*/
     }
 
     private static Mark createActionMark(@Nonnull final String title, @Nonnull final String targetKey) {
