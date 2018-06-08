@@ -39,7 +39,7 @@ public class CtService {
                     .get()
                     .from(userContext)
                     .thenCompose(userDetail -> strideClient.message()
-                                                           .send(buildMainMenuMessage(userDetail.getUserName()))
+                                                           .send(buildMainMenuMessage(userDetail.getDisplayName()))
                                                            .toUser(userContext))
                     .thenCompose(userDetail -> strideClient.message()
                                                            .send(document2)

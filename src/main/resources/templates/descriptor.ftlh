@@ -13,6 +13,14 @@
         "directMessage": {
           "url": "/bot-direct-message"
         }
-    }]
+    }],
+    "chat:configuration": [
+      {
+        "key": "ctinator-config",
+        "page": {
+          "url": "/configuration"
+        }
+      }
+    ]
   }
 }
