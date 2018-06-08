@@ -15,26 +15,22 @@
     <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-soy.min.js"></script>
 </head>
 <body>
-<form action="/save-configuration" method="post">
-    <table>
-        <tr>
-            <label for="projectKey">Project Key</label>
-            <input type="text" name="projectKey" id="projectKey" value="${(ctProjectCredentials.projectKey)!}" required autofocus/>
-        </tr>
-        <tr>
-            <label for="clientId">Client Id</label>
-            <input type="text" name="clientId" id="clientId" value="${(ctProjectCredentials.clientId)!}" required autofocus/>
-        </tr>
-        <tr>
-            <label for="clientSecret">Client Secret</label>
-            <input type="text" name="clientSecret" id="clientSecret" value="${(ctProjectCredentials.clientSecret)!}" required autofocus/>
-        </tr>
-        <tr>
-            <td><input type="submit" value="Submit"/></td>
-        </tr>
-    </table>
-
-
+<form action="/save-configuration" method="post" class="aui">
+    <div class="field-group">
+        <label for="projectKey">Project Key<span class="aui-icon icon-required">required</span></label>
+        <input class="text" type="text" name="projectKey" id="projectKey" value="${(ctProjectCredentials.projectKey)!}"
+               required autofocus/>
+    </div>
+    <div class="field-group">
+        <label for="clientId">Client Id<span class="aui-icon icon-required">required</span></label>
+        <input class="text" type="text" name="clientId" id="clientId" value="${(ctProjectCredentials.clientId)!}"
+               required autofocus/>
+    </div>
+    <div class="field-group">
+        <label for="clientSecret">Client Secret<span class="aui-icon icon-required">required</span></label>
+        <input class="text" type="text" name="clientSecret" id="clientSecret"
+               value="${(ctProjectCredentials.clientSecret)!}" required autofocus/>
+    </div>
 </form>
 </body>
 </html>
