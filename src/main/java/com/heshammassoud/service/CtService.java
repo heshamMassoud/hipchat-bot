@@ -58,17 +58,21 @@ public class CtService {
     private Document buildMainMenuMessage(@Nonnull final String userName) {
         //UnknownInlineNode inlineExtension = new UnknownInlineNode();
         //inlineExtension.properties(new HashMap<>());
-        final Mark commercetoolsMenu = createActionMark("Play around with commercetools project data.",
-                "commercetoolsMenu");
-        final Mark tableTennisMenu = createActionMark("Play table tennis.", "tableTennisMenu");
+        final Mark commercetoolsMenu = createActionMark("commercetools menu", "commercetoolsMenu");
+        final Mark tableTennisMenu = createActionMark("table tennis menu", "tableTennisMenu");
 
 
         return Document.create()
-                       .paragraph(p -> p.text("Hello, ", commercetoolsMenu, tableTennisMenu));
-        /*.paragraph(paragraph -> paragraph.text("Please choose one of the following options:"))
-        .orderedList(l -> l
-               .item(i -> i.paragraph(paragraph -> paragraph.text("", commercetoolsMenu)))
-               .item(i -> i.paragraph(paragraph -> paragraph.text("", tableTennisMenu))));*/
+                       .paragraph(p -> p.text("Hello, ")
+                                        .strong(userName)
+                                        .text("!"))
+                       .paragraph(paragraph -> paragraph.text("Please choose one of the following options:"))
+                       .orderedList(l -> l
+                               .item(i -> i.paragraph(paragraph ->
+                                       paragraph.text("Play around with commercetools project data.",
+                                               commercetoolsMenu)))
+                               .item(i -> i.paragraph(paragraph ->
+                                       paragraph.text("Play table tennis.", tableTennisMenu))));
     }
 
     private static Mark createActionMark(@Nonnull final String title, @Nonnull final String targetKey) {
