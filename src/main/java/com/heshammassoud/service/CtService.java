@@ -41,6 +41,26 @@ public class CtService {
                     .get()
                     .from(userContext)
                     .thenCompose(userDetail -> strideClient.message()
+                                                           .send(buildMainMenuMessage2(userDetail.getUserName()))
+                                                           .toUser(userContext))
+                    .thenCompose(userDetail -> {
+                        LOGGER.info(userDetail.toString());
+                        return strideClient.message()
+                                           .send(document2)
+                                           .toUser(userContext);
+                    })
+                    .thenAccept(response -> LOGGER.info(response.toString()))
+                    .exceptionally(exception -> {
+                        LOGGER.error("", exception);
+                        return null;
+                    });
+
+
+
+        strideClient.user()
+                    .get()
+                    .from(userContext)
+                    .thenCompose(userDetail -> strideClient.message()
                                                            .send(buildMainMenuMessage(userDetail.getUserName()))
                                                            .toUser(userContext))
                     .thenCompose(userDetail -> {
@@ -74,6 +94,16 @@ public class CtService {
                                               .action("Play around with commercetools project data.", "app",
                                                       "key")
                                               .action("Play table tennis.", "app", "key"))
+                       .orderedList(l -> l
+                               .item(i -> i.paragraph("Play around with commercetools project data."))
+                               .item(i -> i.paragraph("Play table tennis.")));
+    }
+
+    private Document buildMainMenuMessage2(@Nonnull final String userName) {
+        return Document.create()
+                       .paragraph(p -> p.text("Hello, ")
+                                        .strong(userName)
+                                        .text("!"))
                        .orderedList(l -> l
                                .item(i -> i.paragraph("Play around with commercetools project data."))
                                .item(i -> i.paragraph("Play table tennis.")));
