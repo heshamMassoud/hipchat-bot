@@ -2,8 +2,8 @@ package com.heshammassoud.service;
 
 import com.atlassian.adf.Document;
 import com.atlassian.stride.api.StrideClient;
-import com.atlassian.stride.api.model.EntityCreatedResponse;
 import com.atlassian.stride.model.context.ConversationContext;
+import com.atlassian.stride.model.context.UserInConversationContext;
 import com.atlassian.stride.model.webhooks.Conversation;
 import com.atlassian.stride.model.webhooks.MessageSent;
 import org.slf4j.Logger;
@@ -11,9 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
-import java.util.concurrent.CompletableFuture;
 
 import static com.atlassian.stride.model.context.Context.conversation;
+import static com.atlassian.stride.model.context.Context.userInConversation;
 
 @Service
 public class CtService {
@@ -31,37 +31,41 @@ public class CtService {
      */
     public void reply(@Nonnull final MessageSent messageSent) {
         final Conversation conversation = messageSent.getConversation();
-        final ConversationContext conversationContext =
-                conversation(messageSent.getCloudId(), conversation.getId());
+        final String conversationId = conversation.getId();
+        final String cloudId = messageSent.getCloudId();
+        final String senderId = messageSent.getSender().getId();
 
-        LOGGER.info("Sending message to: " + conversation.getName());
-        LOGGER.info("in conversation: " + conversation.toString());
+        final ConversationContext conversationContext = conversation(cloudId, conversationId);
+        final UserInConversationContext userContext = userInConversation(cloudId, conversationId, senderId);
 
         final Document document = Document.create()
-                                    .paragraph(p -> p.text("Hello, ").strong(conversation.getName()).text("!"))
-                                    .h1("Welcome to using CTinator")
-                                    .paragraph(p -> p.text("Your wish is my command:"))
-                                    .orderedList(l -> l
-                                            .item(i -> i.paragraph("Play around with commercetools project data."))
-                                            .item(i -> i.paragraph("Play table tennis.")));
+                                          .paragraph(p -> p.text("Hello, ").strong(conversation.getName()).text("!"))
+                                          .h1("Welcome to using CTinator")
+                                          .paragraph(p -> p.text("Your wish is my command:"))
+                                          .orderedList(l -> l
+                                                  .item(i ->
+                                                          i.paragraph("Play around with commercetools project data."))
+                                                  .item(i -> i.paragraph("Play table tennis.")));
 
-        send(conversationContext, document);
-    }
+        final Document document2 = Document.fromMarkdown(
+                "Please specify your commercetools project credentials in my configuration.");
 
-    /**
-     * TODO.
-     * @param conversationContext TODO.
-     * @param document TODO.
-     * @return TODO.
-     */
-    @Nonnull
-    public CompletableFuture<EntityCreatedResponse> send(@Nonnull final ConversationContext conversationContext,
-                                                         @Nonnull final Document document) {
+        strideClient.user()
+                    .get()
+                    .from(userContext)
+                    .thenCompose(userDetail -> {
+                        LOGGER.info("Sending message to: " + userDetail.getDisplayName());
+                        LOGGER.info("w/ username: " + userDetail.getUserName());
+                        LOGGER.info("Sending message: " + document.text());
+                        return strideClient.message()
+                                           .send(document)
+                                           .toConversation(conversationContext);
+                    })
+                    .thenCompose(userDetail -> strideClient.message()
+                                                           .send(document2)
+                                                           .toConversation(conversationContext));
 
-        LOGGER.info("Sending message: " + document.text());
-        return strideClient.message()
-                           .send(document)
-                           .toConversation(conversationContext);
+
     }
 
 }
