@@ -41,10 +41,13 @@ public class CtService {
                     .get()
                     .from(userContext)
                     .thenCompose(userDetail -> strideClient.message()
-                                                           .send(buildRichFormattedMessage())
+                                                           .send(buildMainMenuMessage(userDetail.getUserName()))
                                                            .toUser(userContext))
                     .thenCompose(userDetail -> strideClient.message()
                                                            .send(document2)
+                                                           .toUser(userContext))
+                    .thenCompose(userDetail -> strideClient.message()
+                                                           .send(buildRichFormattedMessage())
                                                            .toUser(userContext));
 
 
@@ -54,7 +57,10 @@ public class CtService {
         return Document.create()
                        .paragraph(p -> p.text("Hello, ").strong(userName).text("!"))
                        .h1("Welcome to using CTinator")
-                       .paragraph(p -> p.text("Your wish is my command:"))
+                       .card("Your wish is my command:", applicationCard ->
+                               applicationCard.attrs()
+                                              .action("Play around with commercetools project data.", "app", "key")
+                                              .action("Play table tennis.", "app", "key"))
                        .orderedList(l -> l
                                .item(i -> i.paragraph("Play around with commercetools project data."))
                                .item(i -> i.paragraph("Play table tennis.")));
