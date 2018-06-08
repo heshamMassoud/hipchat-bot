@@ -18,8 +18,38 @@
       {
         "key": "ctinator-config",
         "page": {
-          "url": "/configuration"
+          "target": "ctinator-config-dialog"
         }
+      }
+    ],
+    "chat:dialog": [
+      {
+        "key": "ctinator-config-dialog",
+        "title": {
+        "value": "CTinator Configuration"
+      },
+      "options": {
+        "size": {
+          "width": "500px",
+          "height": "300px"
+        },
+        "primaryAction":  {
+          "key": "action-save",
+          "name": {
+            "value": "Save"
+          }
+        },
+        "secondaryActions": [
+          {
+            "key": "action-close",
+            "name": {
+              "value": "Close"
+            }
+          }
+        ]
+      },
+      "url": "/configuration",
+      "authentication": "jwt"
       }
     ]
   }
