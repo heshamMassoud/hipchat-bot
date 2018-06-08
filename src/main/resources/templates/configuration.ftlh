@@ -15,8 +15,27 @@
     <script src="//aui-cdn.atlassian.com/aui-adg/6.0.9/js/aui-soy.min.js"></script>
 </head>
 <body>
-<h2>Configure CTinator</h2>
-    <div> Message: ${msg}</div>
-    <div> Time: ${time} </div>
+<form action="/save-configuration" method="post">
+    <table>
+        <tr>
+            <label for="projectKey">Project Key</label>
+            <input type="text" name="projectKey" id="projectKey" value="${(ctProjectCredentials.projectKey)!}" required autofocus/>
+        </tr>
+        <tr>
+            <label for="clientId">Client Id</label>
+            <input type="text" name="clientId" id="clientId" value="${(ctProjectCredentials.clientId)!}" required autofocus/>
+        </tr>
+        <tr>
+            <label for="clientSecret">Client Secret</label>
+            <input type="text" name="clientSecret" id="clientSecret" value="${(ctProjectCredentials.clientSecret)!}" required autofocus/>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Submit"/></td>
+        </tr>
+    </table>
+
+
+</form>
 </body>
 </html>
+
