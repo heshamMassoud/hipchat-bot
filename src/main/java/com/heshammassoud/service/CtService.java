@@ -4,6 +4,7 @@ import com.atlassian.adf.Document;
 import com.atlassian.adf.block.codeblock.Language;
 import com.atlassian.adf.inline.Mark;
 import com.atlassian.stride.api.StrideClient;
+import com.atlassian.stride.api.request.message.RenderMessage;
 import com.atlassian.stride.model.context.UserContext;
 import com.atlassian.stride.model.webhooks.MessageSent;
 import com.heshammassoud.models.ActionTarget;
@@ -39,6 +40,12 @@ public class CtService {
         final Document document2 = Document.fromMarkdown(
                 "Please specify your commercetools project credentials in my configuration.");
 
+
+        final RenderMessage render = strideClient.message().render(buildMainMenuMessage(""));
+        final String s = render.toText().join();
+
+        LOGGER.info(s);
+
         strideClient.user()
                     .get()
                     .from(userContext)
@@ -55,7 +62,12 @@ public class CtService {
 
     }
 
-    private Document buildMainMenuMessage(@Nonnull final String userName) {
+    /**
+     * jfijrijiejgirege.
+     * @param userName gjirjeigjerig
+     * @return gjerigireg.
+     */
+    public static Document buildMainMenuMessage(@Nonnull final String userName) {
         //UnknownInlineNode inlineExtension = new UnknownInlineNode();
         //inlineExtension.properties(new HashMap<>());
         final Mark commercetoolsMenu = createActionMark("commercetools menu", "commercetoolsMenu");
@@ -66,7 +78,8 @@ public class CtService {
                        .paragraph(p -> p.text("Hello, ")
                                         .strong(userName)
                                         .text("!"))
-                       .paragraph(paragraph -> paragraph.text("Please choose one of the following options:"))
+                       .paragraph(paragraph -> paragraph.text(
+                               "Please choose one of the following options:"))
                        .orderedList(l -> l
                                .item(i -> i.paragraph(paragraph ->
                                        paragraph.text("Play around with commercetools project data.",
