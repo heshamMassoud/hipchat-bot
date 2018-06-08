@@ -41,40 +41,9 @@ public class CtService {
                     .get()
                     .from(userContext)
                     .thenCompose(userDetail -> strideClient.message()
-                                                           .send(buildMainMenuMessage2(userDetail.getUserName()))
-                                                           .toUser(userContext))
-                    .thenCompose(userDetail -> {
-                        LOGGER.info(userDetail.toString());
-                        return strideClient.message()
-                                           .send(document2)
-                                           .toUser(userContext);
-                    })
-                    .thenAccept(response -> LOGGER.info(response.toString()))
-                    .exceptionally(exception -> {
-                        LOGGER.error("", exception);
-                        return null;
-                    });
-
-
-
-        strideClient.user()
-                    .get()
-                    .from(userContext)
-                    .thenCompose(userDetail -> strideClient.message()
                                                            .send(buildMainMenuMessage(userDetail.getUserName()))
                                                            .toUser(userContext))
-                    .thenCompose(userDetail -> {
-                        LOGGER.info(userDetail.toString());
-                        return strideClient.message()
-                                           .send(document2)
-                                           .toUser(userContext);
-                    })
-                    .thenCompose(response -> {
-                        LOGGER.info(response.toString());
-                        return strideClient.message()
-                                           .send(buildRichFormattedMessage())
-                                           .toUser(userContext);
-                    })
+                    .thenCompose(userDetail -> strideClient.message().send(document2).toUser(userContext))
                     .thenAccept(response -> LOGGER.info(response.toString()))
                     .exceptionally(exception -> {
                         LOGGER.error("", exception);
@@ -91,9 +60,10 @@ public class CtService {
                                         .text("!"))
                        .card("Your wish is my command:", applicationCard ->
                                applicationCard.attrs()
-                                              .action("Play around with commercetools project data.", "app",
-                                                      "key1")
-                                              .action("Play table tennis.", "app", "key2"))
+                                              .action("Play around with commercetools project data.",
+                                                      "CTinator", "commercetoolsMenu")
+                                              .action("Play table tennis.",
+                                                      "CTinator", "tableTennisMenu"))
                        .orderedList(l -> l
                                .item(i -> i.paragraph("Play around with commercetools project data."))
                                .item(i -> i.paragraph("Play table tennis.")));
