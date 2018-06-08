@@ -92,8 +92,8 @@ public class CtService {
                        .card("Your wish is my command:", applicationCard ->
                                applicationCard.attrs()
                                               .action("Play around with commercetools project data.", "app",
-                                                      "key")
-                                              .action("Play table tennis.", "app", "key"))
+                                                      "key1")
+                                              .action("Play table tennis.", "app", "key2"))
                        .orderedList(l -> l
                                .item(i -> i.paragraph("Play around with commercetools project data."))
                                .item(i -> i.paragraph("Play table tennis.")));
