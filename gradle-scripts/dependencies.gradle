@@ -12,12 +12,13 @@ ext{
 }
 
 dependencies {
+    implementation "com.atlassian.stride:stride-boot:${strideBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    implementation "org.springframework.boot:spring-boot-starter-freemarker:${springBootVersion}"
     annotationProcessor "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
     implementation "com.commercetools.sdk.jvm.core:commercetools-models:${commercetoolsJvmSdkVersion}"
     implementation "com.commercetools.sdk.jvm.core:commercetools-java-client:${commercetoolsJvmSdkVersion}"
     implementation "com.commercetools.sdk.jvm.core:commercetools-convenience:${commercetoolsJvmSdkVersion}"
-    implementation "com.atlassian.stride:stride-boot:${strideBootVersion}"
     implementation "com.google.code.findbugs:annotations:${findbugsVersion}"
     testImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testImplementation "junit:junit:${jUnitVersion}"
