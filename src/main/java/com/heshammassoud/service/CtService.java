@@ -43,23 +43,36 @@ public class CtService {
                     .thenCompose(userDetail -> strideClient.message()
                                                            .send(buildMainMenuMessage(userDetail.getUserName()))
                                                            .toUser(userContext))
-                    .thenCompose(userDetail -> strideClient.message()
-                                                           .send(document2)
-                                                           .toUser(userContext))
-                    .thenCompose(userDetail -> strideClient.message()
-                                                           .send(buildRichFormattedMessage())
-                                                           .toUser(userContext));
+                    .thenCompose(userDetail -> {
+                        LOGGER.info(userDetail.toString());
+                        return strideClient.message()
+                                           .send(document2)
+                                           .toUser(userContext);
+                    })
+                    .thenCompose(response -> {
+                        LOGGER.info(response.toString());
+                        return strideClient.message()
+                                           .send(buildRichFormattedMessage())
+                                           .toUser(userContext);
+                    })
+                    .thenAccept(response -> LOGGER.info(response.toString()))
+                    .exceptionally(exception -> {
+                        LOGGER.error("", exception);
+                        return null;
+                    });
 
 
     }
 
     private Document buildMainMenuMessage(@Nonnull final String userName) {
         return Document.create()
-                       .paragraph(p -> p.text("Hello, ").strong(userName).text("!"))
-                       .h1("Welcome to using CTinator")
+                       .paragraph(p -> p.text("Hello, ")
+                                        .strong(userName)
+                                        .text("!"))
                        .card("Your wish is my command:", applicationCard ->
                                applicationCard.attrs()
-                                              .action("Play around with commercetools project data.", "app", "key")
+                                              .action("Play around with commercetools project data.", "app",
+                                                      "key")
                                               .action("Play table tennis.", "app", "key"))
                        .orderedList(l -> l
                                .item(i -> i.paragraph("Play around with commercetools project data."))
@@ -67,20 +80,21 @@ public class CtService {
     }
 
     private Document buildRichFormattedMessage() {
-        return Document.create().paragraph(p -> p
-                .text("Here is some ")
-                .strong("bold test")
-                .text(" and ")
-                .em("text in italics")
-                .text(" as well as ")
-                .link(" a link", "https://www.atlassian.com")
-                .text(" , emojis ")
-                .emoji(":smile:")
-                .emoji(":rofl:")
-                .emoji(":nerd:")
-                .text(" and some code: ")
-                .code("var i = 0;")
-                .text(" and a bullet list"))
+        return Document.create()
+                       .paragraph(p -> p
+                               .text("Here is some ")
+                               .strong("bold test")
+                               .text(" and ")
+                               .em("text in italics")
+                               .text(" as well as ")
+                               .link(" a link", "https://www.atlassian.com")
+                               .text(" , emojis ")
+                               .emoji(":smile:")
+                               .emoji(":rofl:")
+                               .emoji(":nerd:")
+                               .text(" and some code: ")
+                               .code("var i = 0;")
+                               .text(" and a bullet list"))
                        .bulletList(b -> b
                                .item("With one bullet point")
                                .item("And another"))
