@@ -6,6 +6,8 @@ import com.atlassian.stride.api.model.EntityCreatedResponse;
 import com.atlassian.stride.model.context.ConversationContext;
 import com.atlassian.stride.model.webhooks.Conversation;
 import com.atlassian.stride.model.webhooks.MessageSent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
@@ -16,6 +18,7 @@ import static com.atlassian.stride.model.context.Context.conversation;
 @Service
 public class CtService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(CtService.class);
     private final StrideClient strideClient;
 
     public CtService(@Nonnull final StrideClient strideClient) {
@@ -30,6 +33,9 @@ public class CtService {
         final Conversation conversation = messageSent.getConversation();
         final ConversationContext conversationContext =
                 conversation(messageSent.getCloudId(), conversation.getId());
+
+        LOGGER.info("Sending message to: " + conversation.getName());
+        LOGGER.info("in conversation: " + conversation.toString());
 
         final Document document = Document.create()
                                     .paragraph(p -> p.text("Hello, ").strong(conversation.getName()).text("!"))
@@ -51,6 +57,8 @@ public class CtService {
     @Nonnull
     public CompletableFuture<EntityCreatedResponse> send(@Nonnull final ConversationContext conversationContext,
                                                          @Nonnull final Document document) {
+
+        LOGGER.info("Sending message: " + document.text());
         return strideClient.message()
                            .send(document)
                            .toConversation(conversationContext);
