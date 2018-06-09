@@ -4,6 +4,8 @@ import com.atlassian.stride.model.context.UserContext;
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
 import com.heshammassoud.models.ActionResponse;
 import com.heshammassoud.service.CtService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
@@ -21,6 +23,8 @@ import static com.heshammassoud.models.ActionResponse.ofMessage;
 
 @Controller
 public class CommercetoolsMenuChoiceController {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(CommercetoolsMenuChoiceController.class);
 
     private final CtService ctService;
 
@@ -40,6 +44,7 @@ public class CommercetoolsMenuChoiceController {
                                  @RequestParam @Nonnull final String cloudId) {
 
         final UserContext userContext = user(cloudId, senderId);
+        LOGGER.info("Listing CT Options for " + userContext.toString());
         ctService.listCtOptions(userContext);
         return ofMessage("Awesome!");
     }
