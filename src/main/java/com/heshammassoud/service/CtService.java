@@ -3,23 +3,19 @@ package com.heshammassoud.service;
 import com.atlassian.adf.Document;
 import com.atlassian.adf.block.codeblock.Language;
 import com.atlassian.adf.inline.Mark;
-import com.atlassian.adf.inline.UnknownInlineNode;
 import com.atlassian.stride.api.StrideClient;
 import com.atlassian.stride.model.context.UserContext;
 import com.atlassian.stride.model.webhooks.MessageSent;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.heshammassoud.models.ActionGroupAction;
 import com.heshammassoud.models.ActionGroupActionField;
 import com.heshammassoud.models.ActionGroupParameters;
 import com.heshammassoud.models.ActionTarget;
+import com.heshammassoud.models.InlineExtension;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.Map;
 
 import static com.atlassian.stride.model.context.Context.user;
 import static java.util.Collections.singletonList;
@@ -78,7 +74,7 @@ public class CtService {
         final ActionGroupAction ttAction = createActionGroupAction("tt-menu", "Table Tennis!",
                 "default", "tableTennisMenu");
 
-        final UnknownInlineNode mainMenuActionGroup =
+        final InlineExtension mainMenuActionGroup =
                 createInLineMessageAction("mainMenu", ctAction, ttAction);
 
         return Document.create()
@@ -102,13 +98,9 @@ public class CtService {
     }
 
     @Nonnull
-    private static UnknownInlineNode createInLineMessageAction(@Nonnull final String actionGroupKey,
+    private static InlineExtension createInLineMessageAction(@Nonnull final String actionGroupKey,
                                                                @Nonnull final ActionGroupAction... actions) {
-        UnknownInlineNode inlineExtension = new UnknownInlineNode();
-
-        final Map<String, JsonNode> properties = new HashMap<>();
-        properties.put("type", JsonNodeFactory.instance.textNode("inlineExtension"));
-        inlineExtension.properties(properties);
+        InlineExtension inlineExtension = new InlineExtension();
         inlineExtension.anyAttribute("extensionType", "com.atlassian.stride");
         inlineExtension.anyAttribute("extensionKey", "actionGroup");
         inlineExtension.anyAttribute("parameters", new ActionGroupParameters(actionGroupKey, actions));
