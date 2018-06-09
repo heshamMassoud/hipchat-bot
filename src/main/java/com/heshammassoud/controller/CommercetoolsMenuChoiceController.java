@@ -2,20 +2,21 @@ package com.heshammassoud.controller;
 
 import com.atlassian.stride.model.context.UserContext;
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
-import com.heshammassoud.models.NextAction;
-import com.heshammassoud.models.Target;
+import com.heshammassoud.models.ActionResponse;
 import com.heshammassoud.service.CtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Nonnull;
 
 import static com.atlassian.stride.model.context.Context.user;
+import static com.heshammassoud.models.ActionResponse.ofMessage;
 
 
 @Controller
@@ -31,13 +32,16 @@ public class CommercetoolsMenuChoiceController {
      * korkogkerokgokergokor e.
      * @return gkorekgoekoger.
      */
+    @ResponseBody
     @AuthorizeJwtHeader
     @PostMapping(path = "/commercetools-menu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ModelAndView choose() {
-        return new ModelAndView("action-response")
-                .addObject("message", "Awesome!")
-                .addObject("nextAction", new NextAction(new Target("commercetoolsMenuList")));
+    public ActionResponse choose(@RequestParam @Nonnull final String senderId,
+                                 @RequestParam @Nonnull final String cloudId) {
+
+        final UserContext userContext = user(cloudId, senderId);
+        ctService.listCtOptions(userContext);
+        return ofMessage("Awesome!");
     }
 
     /**

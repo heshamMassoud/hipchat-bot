@@ -1,17 +1,18 @@
 package com.heshammassoud.controller;
 
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
-import com.heshammassoud.models.NextAction;
-import com.heshammassoud.models.Target;
+import com.heshammassoud.models.ActionResponse;
 import com.heshammassoud.service.CtService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.annotation.Nonnull;
+
+import static com.heshammassoud.models.ActionResponse.ofErrorNextAction;
 
 @Controller
 public class TableTennisMenuChoiceController {
@@ -28,12 +29,11 @@ public class TableTennisMenuChoiceController {
      * @return gkorekgoekoger.
      */
     @AuthorizeJwtHeader
+    @ResponseBody
     @PostMapping(path = "/table-tennis-menu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ModelAndView choose() {
-        return new ModelAndView("action-response")
-                .addObject("error", "Damn what a bad choice")
-                .addObject("nextAction", new NextAction(new Target("tableTennisMenuList")));
+    public ActionResponse choose() {
+        return ofErrorNextAction("Damn what a bad choice", "tableTennisMenuList");
     }
 
     @AuthorizeJwtHeader

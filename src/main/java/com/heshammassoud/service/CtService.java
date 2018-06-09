@@ -176,6 +176,8 @@ public class CtService {
      * @param userContext jirgioerj.
      */
     public void listCtOptions(@Nonnull final UserContext userContext) {
+        LOGGER.info("Listing CT Options for " + userContext.toString());
+
         final Map<String, String> parameters = new HashMap<>();
 
         final ActionGroupAction viewProducts = createActionGroupAction("view-products", "View Products",
