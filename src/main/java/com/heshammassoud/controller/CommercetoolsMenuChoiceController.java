@@ -2,6 +2,8 @@ package com.heshammassoud.controller;
 
 import com.atlassian.stride.model.context.UserContext;
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.heshammassoud.models.ActionResponse;
 import com.heshammassoud.service.CtService;
 import org.slf4j.Logger;
@@ -11,7 +13,6 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -40,15 +41,17 @@ public class CommercetoolsMenuChoiceController {
     @AuthorizeJwtHeader
     @PostMapping(path = "/commercetools-menu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.OK)
-    public ActionResponse choose(@RequestParam @Nonnull final String senderId,
-                                 @RequestParam @Nonnull final String cloudId) {
+    public ActionResponse choose(@RequestBody @Nonnull final Object payload) {
 
-        LOGGER.info("SenderId" + senderId);
-        LOGGER.info("cloudId" + cloudId);
+        try {
+            LOGGER.info("SenderId" + new ObjectMapper().writeValueAsString(payload));
+        } catch (JsonProcessingException e) {
+            LOGGER.error("failed to parse request body JSON:", e);
+        }
 
-        final UserContext userContext = user(cloudId, senderId);
-        LOGGER.info("Listing CT Options for " + userContext.toString());
-        ctService.listCtOptions(userContext);
+        //final UserContext userContext = user(cloudId, senderId);
+        //LOGGER.info("Listing CT Options for " + userContext.toString());
+        //ctService.listCtOptions(userContext);
         return ofMessage("Awesome!");
     }
 
