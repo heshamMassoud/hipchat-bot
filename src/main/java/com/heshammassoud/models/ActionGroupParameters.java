@@ -1,14 +1,16 @@
 package com.heshammassoud.models;
 
 import javax.annotation.Nonnull;
+import java.util.Arrays;
+import java.util.List;
 
 public class ActionGroupParameters {
     private String key;
-    private ActionGroupAction[] actions;
+    private List<ActionGroupAction> actions;
 
     public ActionGroupParameters(@Nonnull final String key, @Nonnull final ActionGroupAction... actions) {
         this.key = key;
-        this.actions = actions;
+        this.actions = Arrays.asList(actions);
     }
 
     public String getKey() {
@@ -20,11 +22,11 @@ public class ActionGroupParameters {
     }
 
 
-    public ActionGroupAction[] getActions() {
+    public List<ActionGroupAction> getActions() {
         return actions;
     }
 
-    public void setActions(@Nonnull final ActionGroupAction[] actions) {
-        this.actions = actions;
+    public void setActions(@Nonnull final ActionGroupAction... actions) {
+        this.actions = Arrays.asList(actions);
     }
 }
