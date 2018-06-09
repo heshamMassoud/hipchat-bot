@@ -3,10 +3,13 @@ package com.heshammassoud.service;
 import com.atlassian.adf.Document;
 import com.atlassian.adf.block.codeblock.Language;
 import com.atlassian.adf.inline.Mark;
+import com.atlassian.adf.inline.UnknownInlineNode;
 import com.atlassian.stride.api.StrideClient;
-import com.atlassian.stride.api.request.message.RenderMessage;
 import com.atlassian.stride.model.context.UserContext;
 import com.atlassian.stride.model.webhooks.MessageSent;
+import com.heshammassoud.models.ActionGroupAction;
+import com.heshammassoud.models.ActionGroupActionField;
+import com.heshammassoud.models.ActionGroupParameters;
 import com.heshammassoud.models.ActionTarget;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +18,7 @@ import org.springframework.stereotype.Service;
 import javax.annotation.Nonnull;
 
 import static com.atlassian.stride.model.context.Context.user;
+import static java.util.Collections.singletonList;
 
 @Service
 public class CtService {
@@ -40,17 +44,11 @@ public class CtService {
         final Document document2 = Document.fromMarkdown(
                 "Please specify your commercetools project credentials in my configuration.");
 
-
-        final RenderMessage render = strideClient.message().render(buildMainMenuMessage(""));
-        final String s = render.toText().join();
-
-        LOGGER.info(s);
-
         strideClient.user()
                     .get()
                     .from(userContext)
                     .thenCompose(userDetail -> strideClient.message()
-                                                           .send(buildMainMenuMessage(userDetail.getUserName()))
+                                                           .send(buildMainMenuMessage(userDetail.getDisplayName()))
                                                            .toUser(userContext))
                     .thenCompose(userDetail -> strideClient.message().send(document2).toUser(userContext))
                     .thenAccept(response -> LOGGER.info(response.toString()))
@@ -68,14 +66,19 @@ public class CtService {
      * @return gjerigireg.
      */
     public static Document buildMainMenuMessage(@Nonnull final String userName) {
-        //UnknownInlineNode inlineExtension = new UnknownInlineNode();
-        //inlineExtension.properties(new HashMap<>());
         final Mark commercetoolsMenu = createActionMark("commercetools menu", "commercetoolsMenu");
         final Mark tableTennisMenu = createActionMark("table tennis menu", "tableTennisMenu");
 
+        final ActionGroupAction ctAction = createActionGroupAction("ct-menu", "commercetools Playground",
+                "primary", "commercetoolsMenu");
+        final ActionGroupAction ttAction = createActionGroupAction("tt-menu", "Table Tennis!",
+                "default", "tableTennisMenu");
+
+        final UnknownInlineNode mainMenuActionGroup =
+                createInLineMessageAction("mainMenu", ctAction, ttAction);
 
         return Document.create()
-                       .paragraph(p -> p.text("Hello, ")
+                       .paragraph(p -> p.text("Hi, ")
                                         .strong(userName)
                                         .text("!"))
                        .paragraph(paragraph -> paragraph.text(
@@ -85,8 +88,32 @@ public class CtService {
                                        paragraph.text("Play around with commercetools project data.",
                                                commercetoolsMenu)))
                                .item(i -> i.paragraph(paragraph ->
-                                       paragraph.text("Play table tennis.", tableTennisMenu))));
+                                       paragraph.text("Play table tennis.", tableTennisMenu))))
+                .paragraph(p -> p.children(singletonList(mainMenuActionGroup)));
     }
+
+    @Nonnull
+    private static ActionGroupAction createActionGroupAction(
+            @Nonnull final String key,
+            @Nonnull final String title,
+            @Nonnull final String appearance,
+            @Nonnull final String targetKey) {
+
+        final ActionGroupActionField actionTarget = new ActionGroupActionField(new ActionTarget(targetKey));
+        return new ActionGroupAction(key, title, appearance, actionTarget);
+    }
+
+    @Nonnull
+    private static UnknownInlineNode createInLineMessageAction(@Nonnull final String actionGroupKey,
+                                                               @Nonnull final ActionGroupAction... actions) {
+        UnknownInlineNode inlineExtension = new UnknownInlineNode();
+        inlineExtension.set("type", "inlineExtension");
+        inlineExtension.anyAttribute("extensionType", "com.atlassian.stride");
+        inlineExtension.anyAttribute("extensionKey", "actionGroup");
+        inlineExtension.anyAttribute("parameters", new ActionGroupParameters(actionGroupKey, actions));
+        return inlineExtension;
+    }
+
 
     private static Mark createActionMark(@Nonnull final String title, @Nonnull final String targetKey) {
         return Mark.mark("action")
