@@ -7,6 +7,8 @@ import com.atlassian.adf.inline.UnknownInlineNode;
 import com.atlassian.stride.api.StrideClient;
 import com.atlassian.stride.model.context.UserContext;
 import com.atlassian.stride.model.webhooks.MessageSent;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import com.heshammassoud.models.ActionGroupAction;
 import com.heshammassoud.models.ActionGroupActionField;
 import com.heshammassoud.models.ActionGroupParameters;
@@ -16,6 +18,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.atlassian.stride.model.context.Context.user;
 import static java.util.Collections.singletonList;
@@ -101,7 +105,10 @@ public class CtService {
     private static UnknownInlineNode createInLineMessageAction(@Nonnull final String actionGroupKey,
                                                                @Nonnull final ActionGroupAction... actions) {
         UnknownInlineNode inlineExtension = new UnknownInlineNode();
-        inlineExtension.set("type", "inlineExtension");
+
+        final Map<String, JsonNode> properties = new HashMap<>();
+        properties.put("type", JsonNodeFactory.instance.textNode("inlineExtension"));
+        inlineExtension.properties(properties);
         inlineExtension.anyAttribute("extensionType", "com.atlassian.stride");
         inlineExtension.anyAttribute("extensionKey", "actionGroup");
         inlineExtension.anyAttribute("parameters", new ActionGroupParameters(actionGroupKey, actions));
