@@ -66,8 +66,8 @@ public class CtService {
      * @return gjerigireg.
      */
     public static Document buildMainMenuMessage(@Nonnull final String userName) {
-        final Mark commercetoolsMenu = createActionMark("commercetools menu", "commercetoolsMenu");
-        final Mark tableTennisMenu = createActionMark("table tennis menu", "tableTennisMenu");
+        /*final Mark commercetoolsMenu = createActionMark("commercetools menu", "commercetoolsMenu");
+        final Mark tableTennisMenu = createActionMark("table tennis menu", "tableTennisMenu");*/
 
         final ActionGroupAction ctAction = createActionGroupAction("ct-menu", "commercetools Playground",
                 "primary", "commercetoolsMenu");
@@ -83,13 +83,13 @@ public class CtService {
                                         .text("!"))
                        .paragraph(paragraph -> paragraph.text(
                                "Please choose one of the following options:"))
-                       .orderedList(l -> l
-                               .item(i -> i.paragraph(paragraph ->
-                                       paragraph.text("Play around with commercetools project data.",
-                                               commercetoolsMenu)))
-                               .item(i -> i.paragraph(paragraph ->
-                                       paragraph.text("Play table tennis.", tableTennisMenu))))
-                .paragraph(p -> p.children(singletonList(mainMenuActionGroup)));
+        /*.orderedList(l -> l
+               .item(i -> i.paragraph(paragraph ->
+                       paragraph.text("Play around with commercetools project data.",
+                               commercetoolsMenu)))
+               .item(i -> i.paragraph(paragraph ->
+                       paragraph.text("Play table tennis.", tableTennisMenu))))*/
+                       .paragraph(p -> p.children(singletonList(mainMenuActionGroup)));
     }
 
     @Nonnull
