@@ -43,6 +43,9 @@ public class CommercetoolsMenuChoiceController {
     public ActionResponse choose(@RequestParam @Nonnull final String senderId,
                                  @RequestParam @Nonnull final String cloudId) {
 
+        LOGGER.info("SenderId" + senderId);
+        LOGGER.info("cloudId" + cloudId);
+
         final UserContext userContext = user(cloudId, senderId);
         LOGGER.info("Listing CT Options for " + userContext.toString());
         ctService.listCtOptions(userContext);
