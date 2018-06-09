@@ -83,12 +83,6 @@ public class CtService {
                                         .text("!"))
                        .paragraph(paragraph -> paragraph.text(
                                "Please choose one of the following options:"))
-        /*.orderedList(l -> l
-               .item(i -> i.paragraph(paragraph ->
-                       paragraph.text("Play around with commercetools project data.",
-                               commercetoolsMenu)))
-               .item(i -> i.paragraph(paragraph ->
-                       paragraph.text("Play table tennis.", tableTennisMenu))))*/
                        .paragraph(p -> p.children(singletonList(mainMenuActionGroup)));
     }
 
