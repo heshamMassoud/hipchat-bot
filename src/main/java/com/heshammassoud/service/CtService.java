@@ -175,27 +175,32 @@ public class CtService {
      *
      * @param userContext jirgioerj.
      */
-    public void listCtOptions(@Nonnull final UserContext userContext,
-                              @Nonnull final Map<String, String> parameters) {
+    public void listCtOptions(@Nonnull final UserContext userContext) {
+        final Map<String, String> parameters = new HashMap<>();
+
         final ActionGroupAction viewProducts = createActionGroupAction("view-products", "View Products",
                 "primary", "viewProducts", parameters);
-        final ActionGroupAction viewProductTypes= createActionGroupAction("view-product-types", "View Product Types",
+        final ActionGroupAction viewProductTypes = createActionGroupAction("view-product-types",
+                "View Product Types",
                 "primary", "viewProductTypes", parameters);
-        final ActionGroupAction viewInventories = createActionGroupAction("view-inventories", "View Inventory Entries",
+        final ActionGroupAction viewInventories = createActionGroupAction("view-inventories",
+                "View Inventory Entries",
                 "primary", "viewInventories", parameters);
 
         final ActionGroupAction deleteProducts = createActionGroupAction("delete-products", "Delete Products",
                 "primary", "deleteProducts", parameters);
-        final ActionGroupAction deleteProductTypes= createActionGroupAction("delete-product-types", "Delete Product Types",
-                "primary", "deleteProductTypes", parameters);
-        final ActionGroupAction deleteInventories = createActionGroupAction("delete-inventories", "Delete Inventory Entries",
-                "primary", "deleteInventories", parameters);
+        final ActionGroupAction deleteProductTypes =
+                createActionGroupAction("delete-product-types", "Delete Product Types", "primary",
+                        "deleteProductTypes", parameters);
+        final ActionGroupAction deleteInventories = createActionGroupAction("delete-inventories",
+                "Delete Inventory Entries", "primary", "deleteInventories", parameters);
 
-        final ActionGroupAction syncProducts = createActionGroupAction("sync-products", "Sync Products to another project",
-                "primary", "syncProducts", parameters);
-        final ActionGroupAction syncProductTypes= createActionGroupAction("sync-product-types", "Sync Product Types to another project",
-                "primary", "syncProductTypes", parameters);
-        final ActionGroupAction syncInventories = createActionGroupAction("sync-inventories", "Sync Inventory Entries to another project",
+        final ActionGroupAction syncProducts = createActionGroupAction("sync-products",
+                "Sync Products to another project", "primary", "syncProducts", parameters);
+        final ActionGroupAction syncProductTypes = createActionGroupAction("sync-product-types",
+                "Sync Product Types to another project", "primary", "syncProductTypes", parameters);
+        final ActionGroupAction syncInventories = createActionGroupAction("sync-inventories",
+                "Sync Inventory Entries to another project",
                 "primary", "syncInventories", parameters);
 
         final InlineExtension ctPlaygroundActionGroup =

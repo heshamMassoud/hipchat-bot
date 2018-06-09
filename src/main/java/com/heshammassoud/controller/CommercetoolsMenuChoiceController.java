@@ -32,6 +32,11 @@ public class CommercetoolsMenuChoiceController {
         return ofSuccessNextAction("Awesome!", "commercetoolsMenuList");
     }
 
+    /**
+     * List all the CT playground options.
+     * @param senderId send id.
+     * @param cloudId cloud id.
+     */
     @AuthorizeJwtHeader
     @PostMapping(path = "/commercetools-menu-list")
     @ResponseStatus(HttpStatus.NO_CONTENT)
