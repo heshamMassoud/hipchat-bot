@@ -2,7 +2,7 @@
 <#-- @ftlvariable name="error" type="java.lang.String" -->
 <#-- @ftlvariable name="nextAction" type="com.heshammassoud.models.NextAction" -->
 {
-  "message": "${message}",
-  "error": "${error}",
-  "nextAction": ${nextAction}
+<#if message??>"message": "${message}",</#if>
+<#if error??>"error": "${error}",</#if>
+<#if nextAction??>"nextAction": ${nextAction}</#if>
 }
