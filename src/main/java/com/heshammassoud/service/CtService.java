@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.atlassian.stride.model.context.Context.user;
 import static java.util.Collections.singletonList;
@@ -44,20 +46,21 @@ public class CtService {
         final Document document2 = Document.fromMarkdown(
                 "Please specify your commercetools project credentials in my configuration.");
 
+        final Map<String, String> params = new HashMap<>();
+        params.put("cloudId", cloudId);
+        params.put("senderId", senderId);
+
         strideClient.user()
                     .get()
                     .from(userContext)
-                    .thenCompose(userDetail -> strideClient.message()
-                                                           .send(buildMainMenuMessage(userDetail.getDisplayName()))
-                                                           .toUser(userContext))
+                    .thenApply(userDetail -> buildMainMenuMessage(userDetail.getDisplayName(), params))
+                    .thenCompose(document -> strideClient.message().send(document).toUser(userContext))
                     .thenCompose(userDetail -> strideClient.message().send(document2).toUser(userContext))
                     .thenAccept(response -> LOGGER.info(response.toString()))
                     .exceptionally(exception -> {
                         LOGGER.error("", exception);
                         return null;
                     });
-
-
     }
 
     /**
@@ -65,14 +68,15 @@ public class CtService {
      * @param userName gjirjeigjerig
      * @return gjerigireg.
      */
-    public static Document buildMainMenuMessage(@Nonnull final String userName) {
+    public static Document buildMainMenuMessage(@Nonnull final String userName,
+                                                @Nonnull final Map<String, String> parameters) {
         /*final Mark commercetoolsMenu = createActionMark("commercetools menu", "commercetoolsMenu");
         final Mark tableTennisMenu = createActionMark("table tennis menu", "tableTennisMenu");*/
 
         final ActionGroupAction ctAction = createActionGroupAction("ct-menu", "commercetools Playground",
-                "primary", "commercetoolsMenu");
+                "primary", "commercetoolsMenu", parameters);
         final ActionGroupAction ttAction = createActionGroupAction("tt-menu", "Table Tennis!",
-                "default", "tableTennisMenu");
+                "default", "tableTennisMenu", parameters);
 
         final InlineExtension mainMenuActionGroup =
                 createInLineMessageAction("mainMenu", ctAction, ttAction);
@@ -91,9 +95,10 @@ public class CtService {
             @Nonnull final String key,
             @Nonnull final String title,
             @Nonnull final String appearance,
-            @Nonnull final String targetKey) {
+            @Nonnull final String targetKey,
+            @Nonnull final Map<String, String> parameters) {
 
-        final ActionGroupActionField actionTarget = new ActionGroupActionField(new ActionTarget(targetKey));
+        final ActionGroupActionField actionTarget = new ActionGroupActionField(new ActionTarget(targetKey), parameters);
         return new ActionGroupAction(key, title, appearance, actionTarget);
     }
 
@@ -165,4 +170,50 @@ public class CtService {
                                                                    + "15318&avatarType=issuetype", "Task")));
     }
 
+    /**
+     * jrogerjgiejriogjieorger gre geroij geirj ioerg.
+     *
+     * @param userContext jirgioerj.
+     */
+    public void listCtOptions(@Nonnull final UserContext userContext,
+                              @Nonnull final Map<String, String> parameters) {
+        final ActionGroupAction viewProducts = createActionGroupAction("view-products", "View Products",
+                "primary", "viewProducts", parameters);
+        final ActionGroupAction viewProductTypes= createActionGroupAction("view-product-types", "View Product Types",
+                "primary", "viewProductTypes", parameters);
+        final ActionGroupAction viewInventories = createActionGroupAction("view-inventories", "View Inventory Entries",
+                "primary", "viewInventories", parameters);
+
+        final ActionGroupAction deleteProducts = createActionGroupAction("delete-products", "Delete Products",
+                "primary", "deleteProducts", parameters);
+        final ActionGroupAction deleteProductTypes= createActionGroupAction("delete-product-types", "Delete Product Types",
+                "primary", "deleteProductTypes", parameters);
+        final ActionGroupAction deleteInventories = createActionGroupAction("delete-inventories", "Delete Inventory Entries",
+                "primary", "deleteInventories", parameters);
+
+        final ActionGroupAction syncProducts = createActionGroupAction("sync-products", "Sync Products to another project",
+                "primary", "syncProducts", parameters);
+        final ActionGroupAction syncProductTypes= createActionGroupAction("sync-product-types", "Sync Product Types to another project",
+                "primary", "syncProductTypes", parameters);
+        final ActionGroupAction syncInventories = createActionGroupAction("sync-inventories", "Sync Inventory Entries to another project",
+                "primary", "syncInventories", parameters);
+
+        final InlineExtension ctPlaygroundActionGroup =
+                createInLineMessageAction("ct-playground-list",
+                        viewProducts, viewProductTypes, viewInventories,
+                        deleteProducts, deleteProductTypes, deleteInventories,
+                        syncProducts, syncProductTypes, syncInventories);
+
+        final Document ctpgDoc = Document.create()
+                                            .paragraph(paragraph -> paragraph.text(
+                                                    "Please choose one of the following options:"))
+                                            .paragraph(p -> p.children(singletonList(ctPlaygroundActionGroup)));
+
+
+        strideClient.message().send(ctpgDoc).toUser(userContext);
+    }
+
+    public void listTtOptions() {
+
+    }
 }

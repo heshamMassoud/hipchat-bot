@@ -64,6 +64,18 @@
            "callService": {
              "url": "/table-tennis-menu"
            }
+          },
+          {
+           "key": "commercetoolsMenuList",
+           "callService": {
+             "url": "/commercetools-menu-list"
+           }
+          },
+          {
+           "key": "tableTennisMenuList",
+           "callService": {
+             "url": "/table-tennis-menu-list"
+           }
           }
       ]
   }
