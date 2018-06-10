@@ -44,7 +44,7 @@ public class DeleteController {
 
         LOGGER.info("Got delete-menu callback with payload {}", actionTargetRequest.toString());
         messageService.sendPrivatley(actionTargetRequest.getContext(), deleteMenu());
-        return ActionResponse.of();
+        return ActionResponse.ofMessage("test");
     }
 
     /**
