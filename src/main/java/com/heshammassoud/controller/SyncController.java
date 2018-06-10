@@ -41,7 +41,7 @@ public class SyncController {
     public ActionResponse menu(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got sync-menu callback with payload {}", actionTargetRequest.toString());
-        messageService.sendPrivatley(actionTargetRequest.getContext(), deleteMenu());
+        messageService.sendPrivately(actionTargetRequest.getContext(), deleteMenu());
         return ActionResponse.of();
     }
 

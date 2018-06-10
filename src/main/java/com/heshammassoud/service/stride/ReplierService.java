@@ -32,7 +32,7 @@ public class ReplierService {
 
         userService.getUser(userContext) // 1. get user.
                    .thenApply(userDetail -> getMainMenuReply(messageContent, userDetail)) // 2. build reply.
-                   .thenCompose(reply -> messageService.sendPrivatley(userContext, reply)); // 3. send message.
+                   .thenCompose(reply -> messageService.sendPrivately(userContext, reply)); // 3. send message.
     }
 
 }

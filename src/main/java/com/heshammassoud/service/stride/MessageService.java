@@ -27,7 +27,7 @@ public class MessageService {
      * @return a future containing the result of sending the message.
      */
     @Nonnull
-    public CompletableFuture<EntityCreatedResponse> sendPrivatley(@Nonnull final UserContext context,
+    public CompletableFuture<EntityCreatedResponse> sendPrivately(@Nonnull final UserContext context,
                                                                   @Nonnull final Document message) {
         return strideClient.message()
                            .send(message)
