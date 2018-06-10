@@ -74,7 +74,7 @@ public class DeleteController {
     public ActionResponse productsConfirmYes(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got products-delete-yes callback with payload {}", actionTargetRequest.toString());
-        messageService.sendPrivatley(actionTargetRequest.getContext(),
+        messageService.sendPrivately(actionTargetRequest.getContext(),
                 mainMenu("Deleting products from  \"project-x-key\" ..... Fasten your seat belt, "
                         + "this may take some time. Deleted 230/3000. "));
         return ActionResponse.of();
@@ -92,7 +92,7 @@ public class DeleteController {
     public ActionResponse productsConfirmNo(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got products-delete-no callback with payload {}", actionTargetRequest.toString());
-        messageService.sendPrivatley(actionTargetRequest.getContext(),
+        messageService.sendPrivately(actionTargetRequest.getContext(),
                 mainMenu("It seems that you are not ready yet for that. Anything else I can do for you?"));
         return ActionResponse.of();
     }
@@ -109,7 +109,7 @@ public class DeleteController {
     public ActionResponse categories(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got categories-delete-menu callback with payload {}", actionTargetRequest.toString());
-        messageService.sendPrivatley(actionTargetRequest.getContext(), confirmProductsDelete("NOT YET IMPLEMENTED", 0));
+        messageService.sendPrivately(actionTargetRequest.getContext(), confirmProductsDelete("NOT YET IMPLEMENTED", 0));
         return ActionResponse.of();
     }
 
@@ -125,7 +125,7 @@ public class DeleteController {
     public ActionResponse inventories(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got inventories-delete-menu callback with payload {}", actionTargetRequest.toString());
-        messageService.sendPrivatley(actionTargetRequest.getContext(), confirmProductsDelete("NOT YET IMPLEMENTED", 0));
+        messageService.sendPrivately(actionTargetRequest.getContext(), confirmProductsDelete("NOT YET IMPLEMENTED", 0));
         return ActionResponse.of();
     }
 
