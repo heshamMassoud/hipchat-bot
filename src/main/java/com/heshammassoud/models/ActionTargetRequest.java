@@ -3,6 +3,7 @@ package com.heshammassoud.models;
 import com.atlassian.stride.model.context.Context;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Map;
 
 public class ActionTargetRequest {
@@ -11,6 +12,8 @@ public class ActionTargetRequest {
     private Context context;
     private Map<String, Object> parameters;
 
+    public ActionTargetRequest() {
+    }
 
     public ActionTargetRequest(@Nonnull final String source, @Nonnull final String target,
                                @Nonnull final Context context,
@@ -49,7 +52,7 @@ public class ActionTargetRequest {
         return parameters;
     }
 
-    public void setParameters(@Nonnull final Map<String, Object> parameters) {
+    public void setParameters(@Nullable final Map<String, Object> parameters) {
         this.parameters = parameters;
     }
 }
