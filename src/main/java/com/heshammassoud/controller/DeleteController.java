@@ -36,7 +36,6 @@ public class DeleteController {
      *
      * @param actionTargetRequest the payload sent from the action.
      */
-    @AuthorizeJwtHeader
     @PostMapping(path = "/delete-menu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
@@ -44,7 +43,7 @@ public class DeleteController {
 
         LOGGER.info("Got delete-menu callback with payload {}", actionTargetRequest.toString());
         messageService.sendPrivatley(actionTargetRequest.getContext(), deleteMenu());
-        return ActionResponse.ofMessage("test");
+        return ActionResponse.of();
     }
 
     /**
