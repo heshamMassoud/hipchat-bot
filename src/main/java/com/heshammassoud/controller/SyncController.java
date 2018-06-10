@@ -35,7 +35,7 @@ public class SyncController {
      * @param actionTargetRequest the payload sent from the action.
      */
     @AuthorizeJwtHeader
-    @PostMapping(path = "/sync-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/sync-menu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse menu(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {

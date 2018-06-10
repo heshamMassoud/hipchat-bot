@@ -37,7 +37,7 @@ public class DeleteController {
      * @param actionTargetRequest the payload sent from the action.
      */
     @AuthorizeJwtHeader
-    @PostMapping(path = "/delete-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/delete-menu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse menu(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
@@ -53,7 +53,7 @@ public class DeleteController {
      * @param actionTargetRequest the payload sent from the action.
      */
     @AuthorizeJwtHeader
-    @PostMapping(path = "/products-delete-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/products-delete-menu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse products(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
@@ -69,7 +69,7 @@ public class DeleteController {
      * @param actionTargetRequest the payload sent from the action.
      */
     @AuthorizeJwtHeader
-    @PostMapping(path = "/products-delete-yes", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/products-delete-yes", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse productsConfirmYes(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
@@ -87,7 +87,7 @@ public class DeleteController {
      * @param actionTargetRequest the payload sent from the action.
      */
     @AuthorizeJwtHeader
-    @PostMapping(path = "/products-delete-no", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/products-delete-no", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse productsConfirmNo(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
@@ -104,7 +104,7 @@ public class DeleteController {
      * @param actionTargetRequest the payload sent from the action.
      */
     @AuthorizeJwtHeader
-    @PostMapping(path = "/categories-delete-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/categories-delete-menu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse categories(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
@@ -120,7 +120,7 @@ public class DeleteController {
      * @param actionTargetRequest the payload sent from the action.
      */
     @AuthorizeJwtHeader
-    @PostMapping(path = "/inventories-delete-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path = "/inventories-delete-menu", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse inventories(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
