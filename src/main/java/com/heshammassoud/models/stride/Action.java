@@ -1,15 +1,15 @@
-package com.heshammassoud.models;
+package com.heshammassoud.models.stride;
 
 import javax.annotation.Nonnull;
 import java.util.Map;
 
-public class ActionGroupActionField {
+public class Action {
     private ActionTarget target;
     private Map<String, String> parameters;
 
-    public ActionGroupActionField(@Nonnull final ActionTarget target,
-                                  @Nonnull final Map<String, String> parameters) {
-        this.target = target;
+    public Action(@Nonnull final String targetKey,
+                  @Nonnull final Map<String, String> parameters) {
+        this.target = new ActionTarget(targetKey);
         this.parameters = parameters;
     }
 

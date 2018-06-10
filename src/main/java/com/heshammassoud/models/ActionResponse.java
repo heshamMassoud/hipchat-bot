@@ -18,6 +18,10 @@ public class ActionResponse {
                 .map(key -> new NextAction(new Target(key))).orElse(null);
     }
 
+    public static ActionResponse of() {
+        return new ActionResponse(null, null, null);
+    }
+
     public static ActionResponse ofMessage(@Nonnull final String message) {
         return new ActionResponse(message, null, null);
     }

@@ -1,11 +1,11 @@
-package com.heshammassoud.models;
+package com.heshammassoud.models.stride;
 
 import javax.annotation.Nonnull;
 
-public class ActionTarget {
+public class InlineExtensionParameters {
     private String key;
 
-    public ActionTarget(@Nonnull final String key) {
+    public InlineExtensionParameters(@Nonnull final String key) {
         this.key = key;
     }
 

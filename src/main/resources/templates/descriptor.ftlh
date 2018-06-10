@@ -54,21 +54,51 @@
     ],
     "chat:actionTarget" : [
           {
-           "key": "commercetoolsMenu",
+           "key": "syncMenuOption",
            "callService": {
-             "url": "/commercetools-menu"
+             "url": "/sync-menu"
            }
           },
           {
-           "key": "tableTennisMenu",
+           "key": "deleteMenuOption",
            "callService": {
-             "url": "/table-tennis-menu"
+             "url": "/delete-menu"
            }
           },
           {
-           "key": "commercetoolsMenuList",
+           "key": "viewMenuOption",
            "callService": {
-             "url": "/commercetools-menu-list"
+             "url": "/view-menu"
+           }
+          },
+          {
+           "key": "productsDeleteOption",
+           "callService": {
+             "url": "/products-delete-menu"
+           }
+          },
+          {
+           "key": "categoriesDeleteOption",
+           "callService": {
+             "url": "/categories-delete-menu"
+           }
+          },
+          {
+           "key": "inventoriesDeleteOption",
+           "callService": {
+             "url": "/inventories-delete-menu"
+           }
+          },
+          {
+           "key": "productsDeleteYes",
+           "callService": {
+             "url": "/products-delete-yes"
+           }
+          },
+          {
+           "key": "productsDeleteNo",
+           "callService": {
+             "url": "/products-delete-no"
            }
           },
           {

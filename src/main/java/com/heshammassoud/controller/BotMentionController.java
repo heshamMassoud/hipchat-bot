@@ -2,7 +2,7 @@ package com.heshammassoud.controller;
 
 import com.atlassian.stride.model.webhooks.MessageSent;
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
-import com.heshammassoud.service.ReplierService;
+import com.heshammassoud.service.stride.ReplierService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -25,12 +25,17 @@ public class BotMentionController {
         this.replierService = replierService;
     }
 
+    /**
+     * Whenever the bot gets mentioned anywhere, this controller is called.
+     * @param messageSent the message sent to the bot.
+     */
     @AuthorizeJwtHeader
     @PostMapping(path = "/bot-mention", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void mention(@RequestBody @Nonnull final MessageSent messageSent) {
+
         LOGGER.info("Got bot mention callback with text {}", messageSent.getMessage().getText());
-        replierService.reply(messageSent);
+        replierService.mainMenuReply(messageSent);
     }
 
 }
