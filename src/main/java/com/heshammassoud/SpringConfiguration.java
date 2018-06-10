@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Import;
 @Import(StrideSpringConfiguration.class)
 public class SpringConfiguration {
     @Bean
-    public SphereClient sphereClient(){
+    public SphereClient sphereClient() {
         return SphereClientUtils.CTP_CLIENT;
     }
 }
