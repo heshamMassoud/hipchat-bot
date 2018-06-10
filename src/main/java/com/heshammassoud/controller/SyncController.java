@@ -1,6 +1,7 @@
 package com.heshammassoud.controller;
 
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
+import com.heshammassoud.models.ActionResponse;
 import com.heshammassoud.models.ActionTargetRequest;
 import com.heshammassoud.service.stride.MessageService;
 import org.slf4j.Logger;
@@ -34,11 +35,12 @@ public class SyncController {
      */
     @AuthorizeJwtHeader
     @PostMapping(path = "/sync-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void menu(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
+    @ResponseStatus(HttpStatus.OK)
+    public ActionResponse menu(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got sync-menu callback with payload {}", actionTargetRequest.toString());
         messageService.sendPrivatley(actionTargetRequest.getContext(), deleteMenu());
+        return ActionResponse.of();
     }
 
 }

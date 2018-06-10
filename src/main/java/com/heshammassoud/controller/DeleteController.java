@@ -1,6 +1,7 @@
 package com.heshammassoud.controller;
 
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
+import com.heshammassoud.models.ActionResponse;
 import com.heshammassoud.models.ActionTargetRequest;
 import com.heshammassoud.service.stride.MessageService;
 import org.slf4j.Logger;
@@ -36,11 +37,12 @@ public class DeleteController {
      */
     @AuthorizeJwtHeader
     @PostMapping(path = "/delete-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void menu(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
+    @ResponseStatus(HttpStatus.OK)
+    public ActionResponse menu(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got delete-menu callback with payload {}", actionTargetRequest.toString());
         messageService.sendPrivatley(actionTargetRequest.getContext(), deleteMenu());
+        return ActionResponse.of();
     }
 
     /**
@@ -50,11 +52,12 @@ public class DeleteController {
      */
     @AuthorizeJwtHeader
     @PostMapping(path = "/products-delete-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void products(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
+    @ResponseStatus(HttpStatus.OK)
+    public ActionResponse products(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got products-delete-menu callback with payload {}", actionTargetRequest.toString());
         messageService.sendPrivatley(actionTargetRequest.getContext(), confirmProductsDelete("project-x-key", 3000));
+        return ActionResponse.of();
     }
 
     /**
@@ -64,13 +67,14 @@ public class DeleteController {
      */
     @AuthorizeJwtHeader
     @PostMapping(path = "/products-delete-yes", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void productsConfirmYes(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
+    @ResponseStatus(HttpStatus.OK)
+    public ActionResponse productsConfirmYes(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got products-delete-yes callback with payload {}", actionTargetRequest.toString());
         messageService.sendPrivatley(actionTargetRequest.getContext(),
                 mainMenu("Deleting products from  \"project-x-key\" ..... Fasten your seat belt, "
                         + "this may take some time. Deleted 230/3000. "));
+        return ActionResponse.of();
     }
 
     /**
@@ -80,12 +84,13 @@ public class DeleteController {
      */
     @AuthorizeJwtHeader
     @PostMapping(path = "/products-delete-no", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void productsConfirmNo(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
+    @ResponseStatus(HttpStatus.OK)
+    public ActionResponse productsConfirmNo(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got products-delete-no callback with payload {}", actionTargetRequest.toString());
         messageService.sendPrivatley(actionTargetRequest.getContext(),
                 mainMenu("It seems that you are not ready yet for that. Anything else I can do for you?"));
+        return ActionResponse.of();
     }
 
     /**
@@ -95,11 +100,12 @@ public class DeleteController {
      */
     @AuthorizeJwtHeader
     @PostMapping(path = "/categories-delete-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void categories(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
+    @ResponseStatus(HttpStatus.OK)
+    public ActionResponse categories(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got categories-delete-menu callback with payload {}", actionTargetRequest.toString());
         messageService.sendPrivatley(actionTargetRequest.getContext(), confirmProductsDelete("NOT YET IMPLEMENTED", 0));
+        return ActionResponse.of();
     }
 
     /**
@@ -109,11 +115,12 @@ public class DeleteController {
      */
     @AuthorizeJwtHeader
     @PostMapping(path = "/inventories-delete-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void inventories(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
+    @ResponseStatus(HttpStatus.OK)
+    public ActionResponse inventories(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got inventories-delete-menu callback with payload {}", actionTargetRequest.toString());
         messageService.sendPrivatley(actionTargetRequest.getContext(), confirmProductsDelete("NOT YET IMPLEMENTED", 0));
+        return ActionResponse.of();
     }
 
 }
