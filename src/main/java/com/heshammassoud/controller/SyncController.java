@@ -11,6 +11,7 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.annotation.Nonnull;
@@ -35,6 +36,7 @@ public class SyncController {
      */
     @AuthorizeJwtHeader
     @PostMapping(path = "/sync-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @ResponseBody
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse menu(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
