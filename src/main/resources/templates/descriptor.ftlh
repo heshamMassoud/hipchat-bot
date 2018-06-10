@@ -87,7 +87,8 @@
            "key": "inventoriesDeleteOption",
            "callService": {
              "url": "/inventories-delete-menu"
-           },
+           }
+          },
           {
            "key": "productsDeleteYes",
            "callService": {
@@ -98,7 +99,7 @@
            "key": "productsDeleteNo",
            "callService": {
              "url": "/products-delete-no"
-           },
+           }
           },
           {
            "key": "tableTennisMenuList",
