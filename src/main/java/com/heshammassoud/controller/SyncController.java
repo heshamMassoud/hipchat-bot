@@ -1,7 +1,7 @@
 package com.heshammassoud.controller;
 
-import com.atlassian.stride.model.webhooks.MessageSent;
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
+import com.heshammassoud.models.ActionTargetRequest;
 import com.heshammassoud.service.stride.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import javax.annotation.Nonnull;
 
-import static com.heshammassoud.util.stride.ContextUtil.toUserContext;
 import static com.heshammassoud.util.stride.MessageUtil.deleteMenu;
 
 @Controller
@@ -30,15 +29,16 @@ public class SyncController {
 
     /**
      * Whenever the sync option in the main menu is chosen, this controller is called.
-     * @param messageSent the message sent to the bot.
+     *
+     * @param actionTargetRequest the payload sent from the action.
      */
     @AuthorizeJwtHeader
     @PostMapping(path = "/sync-menu", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void mention(@RequestBody @Nonnull final MessageSent messageSent) {
+    public void menu(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
-        LOGGER.info("Got sync-menu callback with text {}", messageSent.getMessage().getText());
-        messageService.sendPrivatley(toUserContext(messageSent), deleteMenu());
+        LOGGER.info("Got sync-menu callback with payload {}", actionTargetRequest.toString());
+        messageService.sendPrivatley(actionTargetRequest.getContext(), deleteMenu());
     }
 
 }
