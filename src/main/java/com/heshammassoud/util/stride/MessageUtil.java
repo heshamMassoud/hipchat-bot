@@ -47,7 +47,21 @@ public final class MessageUtil {
                         "Sync data between two commercetools projects.",
                         "primary", "syncMenuOption", emptyMap());
 
-        final InlineExtension mainMenuActionGroup = ofActionGroup("mainMenu", syncMenuOption);
+        final ActionGroupAction deleteMenuOption =
+                ActionGroupAction.of("delete-menu-option",
+                        "Delete all data of one resource (e.g. products, categories, etc..)"
+                                + " in a commercetools project.",
+                        "primary", "deleteMenuOption", emptyMap());
+
+        final ActionGroupAction viewMenuOption =
+                ActionGroupAction.of("view-menu-option",
+                        "View data in a commercetools project.",
+                        "primary", "viewMenuOption", emptyMap());
+
+        final InlineExtension mainMenuActionGroup = ofActionGroup("mainMenu",
+                syncMenuOption,
+                deleteMenuOption,
+                viewMenuOption);
 
         return Document.create()
                        .paragraph(paragraph -> paragraph.text(menuHeader))
