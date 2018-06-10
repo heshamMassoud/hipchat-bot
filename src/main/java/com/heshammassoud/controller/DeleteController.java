@@ -67,8 +67,8 @@ public class DeleteController {
         try {
             final String asJson = new ObjectMapper().writeValueAsString(actionTargetRequest);
             LOGGER.info("Got products-delete-menu callback with payload {}", asJson);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+        } catch (JsonProcessingException exception) {
+            LOGGER.info("Failed to parse JSON payload payload {}", exception);
         }
 
         productService.getTotalProducts()
