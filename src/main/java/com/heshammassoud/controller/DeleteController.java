@@ -2,8 +2,6 @@ package com.heshammassoud.controller;
 
 import com.atlassian.adf.Document;
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.heshammassoud.models.ActionResponse;
 import com.heshammassoud.models.ActionTargetRequest;
 import com.heshammassoud.service.commercetools.ProductService;
@@ -64,18 +62,11 @@ public class DeleteController {
     @ResponseStatus(HttpStatus.OK)
     public ActionResponse products(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
-        try {
-            final String asJson = new ObjectMapper().writeValueAsString(actionTargetRequest);
-            LOGGER.info("Got products-delete-menu callback with payload {}", asJson);
-        } catch (JsonProcessingException exception) {
-            LOGGER.info("Failed to parse JSON payload payload {}", exception);
-        }
+        final Document replyMessage = productService.getTotalProducts()
+                                                    .thenApply(totalNumberOfProducts ->
+                                                            confirmProductsDelete(System.getenv("PROJECT_KEY"), 3000)).join();
 
-        productService.getTotalProducts()
-                      .thenApply(totalNumberOfProducts ->
-                              confirmProductsDelete(System.getenv("PROJECT_KEY"), 3000))
-                      .thenCompose(replyMessage ->
-                              messageService.sendPrivately(actionTargetRequest.getContext(), replyMessage));
+        messageService.sendPrivately(actionTargetRequest.getContext(), replyMessage);
 
         return ActionResponse.of();
     }
