@@ -36,7 +36,7 @@ public class ActionGroupAction {
             @Nonnull final String targetKey,
             @Nonnull final Map<String, String> parameters) {
 
-        final Action action = new Action(targetKey, parameters);
+        final Action action = new Action(targetKey);
         return new ActionGroupAction(key, title, appearance, action);
     }
 
