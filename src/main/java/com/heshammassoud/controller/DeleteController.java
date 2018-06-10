@@ -1,8 +1,10 @@
 package com.heshammassoud.controller;
 
+import com.atlassian.adf.Document;
 import com.atlassian.stride.spring.auth.AuthorizeJwtHeader;
 import com.heshammassoud.models.ActionResponse;
 import com.heshammassoud.models.ActionTargetRequest;
+import com.heshammassoud.service.commercetools.ProductService;
 import com.heshammassoud.service.stride.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +28,12 @@ public class DeleteController {
     private static final Logger LOGGER = LoggerFactory.getLogger(DeleteController.class);
 
     private final MessageService messageService;
+    private final ProductService productService;
 
-    public DeleteController(@Nonnull final MessageService messageService) {
+    public DeleteController(@Nonnull final MessageService messageService,
+                            @Nonnull final ProductService productService) {
         this.messageService = messageService;
+        this.productService = productService;
     }
 
     /**
@@ -58,7 +63,13 @@ public class DeleteController {
     public ActionResponse products(@RequestBody @Nonnull final ActionTargetRequest actionTargetRequest) {
 
         LOGGER.info("Got products-delete-menu callback with payload {}", actionTargetRequest.toString());
-        messageService.sendPrivatley(actionTargetRequest.getContext(), confirmProductsDelete("project-x-key", 3000));
+
+        productService.getTotalProducts()
+                      .thenApply(totalNumberOfProducts ->
+                              confirmProductsDelete(System.getenv("PROJECT_KEY"), 3000))
+                      .thenCompose(replyMessage ->
+                              messageService.sendPrivately(actionTargetRequest.getContext(), replyMessage));
+
         return ActionResponse.of();
     }
 
@@ -77,6 +88,20 @@ public class DeleteController {
         messageService.sendPrivately(actionTargetRequest.getContext(),
                 mainMenu("Deleting products from  \"project-x-key\" ..... Fasten your seat belt, "
                         + "this may take some time. Deleted 230/3000. "));
+
+        productService.deleteAllProducts()
+                      .thenCompose(aVoid ->
+                              messageService.sendPrivately(actionTargetRequest.getContext(),
+                                      mainMenu("Deleting products from  \"project-x-key\"..... "
+                                              + "Fasten your seat belt, this may take some time..")))
+                      .thenCompose(response -> messageService.sendPrivately(actionTargetRequest.getContext(),
+                              Document.fromMarkdown("Products deleted Successfully! @gif success!")))
+                      .exceptionally(throwable -> {
+                          messageService.sendPrivately(actionTargetRequest.getContext(),
+                                  Document.fromMarkdown("Sorry, I couldn't delete all the products. @gif sad"
+                                          + throwable.getMessage()));
+                          return null;
+                      });
         return ActionResponse.of();
     }
 
